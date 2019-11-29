@@ -61,20 +61,7 @@ class TodoList extends Component {
       {
         title: "status",
         dataIndex: "status",
-        key: "status",
-        render: (text, record) => {
-          console.log("this", record);
-          return (
-            <Switch
-              // checked= {"status"}
-              //   style={{ backgroundColor: "#011529" ,color: "white" }}
-              id={record.status ? "a" : "b"}
-              //   checked={true ? "a" :'b'}
-              //  defaultChecked
-              onChange={this.updateStatus}
-            />
-          );
-        }
+        key: "status"
       },
 
       {
@@ -91,40 +78,28 @@ class TodoList extends Component {
       }
     ];
   }
+
   componentDidMount() {
-    axios({
-      method: "get",
-      url: "http://localhost:3000/api/v1/todos",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "X-User-Email": readCookie("userEmail"),
-        "X-User-Token": readCookie("userToken")
+    getData().then(res => {
+      console.log(res);
+      if (res.status === 200) {
+        let todo = res.data.items;
+        this.setState({ todosArray: todo });
       }
-    }).then(res => {
-      let todo = res.data.items
-      this.setState({todosArray:todo})
-      console.log("Todo Data", res);
-    })
-      .catch(error => {
-          console.log(error);
-         });
-
-
-   
+    });
   }
   updateStatus = checked => {
     console.log("Update Status", checked);
     return this.setState({ checking: checked });
   };
   render() {
-    let filterdData = data.filter(result => {
+    const { todosArray } = this.state;
+
+    let filterdData = todosArray.filter(result => {
       return result.status
         ? (result.status = "true")
         : (result.status = "false");
     });
-    const { title, description, status } = this.state;
-    console.log(filterdData);
 
     return (
       <Fragment>
@@ -138,7 +113,7 @@ class TodoList extends Component {
                 columns={this.columns}
                 rowKey="id"
                 pagination={false}
-                dataSource={this.state.todosArray}
+                dataSource={filterdData}
               />
               <AddTodoPage />
             </Col>
