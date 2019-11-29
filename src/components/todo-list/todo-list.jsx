@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { Button, Input, Row, Col, Popconfirm, Table } from "antd";
-import AddTodo from "../add-todo";
 import "./todo-list.css";
+// import AddButton from "../add-button";
+import AddTodoPage from '../add-todo';
 
 const data = [
   {
@@ -91,7 +92,7 @@ class TodoList extends Component {
                 pagination = {false}
                 dataSource={data}
               />
-              <AddTodo />
+              <AddTodoPage />
             </Col>
           </Row>
         </div>
