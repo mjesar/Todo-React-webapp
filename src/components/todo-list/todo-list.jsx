@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
-import { Button, Input, Popconfirm, Table } from "antd";
-import AddTodo from '../add-todo'
+import { Button, Input, Row, Col, Popconfirm, Table } from "antd";
+import AddTodo from "../add-todo";
 import "./todo-list.css";
 
 const data = [
@@ -79,13 +79,22 @@ class TodoList extends Component {
 
     return (
       <Fragment>
-        <Table
-          style={{ marginTop: 40 }}
-          columns={this.columns}
-          rowKey="id"
-          dataSource={data}
-        />
-        <AddTodo/>
+        <div className="todoInputs">
+          <Row>
+            <Col span={9}></Col>
+
+            <Col span={2}>
+              <Table
+                style={{ marginTop: 40 }}
+                columns={this.columns}
+                rowKey="id"
+                pagination = {false}
+                dataSource={data}
+              />
+              <AddTodo />
+            </Col>
+          </Row>
+        </div>
       </Fragment>
     );
   }
