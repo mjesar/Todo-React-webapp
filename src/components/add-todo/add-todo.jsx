@@ -1,12 +1,38 @@
-import React, {Component, Fragment} from 'react'
-import "./add-todo.css"
+import React, { Component, Fragment } from "react";
+import { Button, message, Input, InputNumber, Row, Col } from "antd";
+import "./add-todo.css";
 class AddTodo extends Component {
-    render(){
-        return(
-            <Fragment>
-                <h1>Add-Todo</h1>
-            </Fragment>
-        );
-    }
+  render() {
+    return (
+      <Fragment>
+        <div className="todoInputs">
+         
+          <Row>
+            <Col span={4}></Col>
+            
+            <Col span={10}>
+              <InputNumber
+                placeholder={"Task"}
+                size="small"
+                min={1}
+                style={{ width: 150 }}
+                max={100000}
+                // onChange={e => {
+                //   this.setState({ amount: e });
+                // }}
+              />
+              <Button
+                onClick={this.handleCash}
+                style={{ backgroundColor: "#011529", color: "white" }}
+                size={"small"}
+              >
+                Add
+              </Button>
+            </Col>
+          </Row>
+          </div>
+      </Fragment>
+    );
+  }
 }
-export default AddTodo
+export default AddTodo;
