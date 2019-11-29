@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Button, Input, Popconfirm,Table } from "antd";
+import { Button, Input, Popconfirm, Table } from "antd";
 import "./todo-list.css";
 
 const data = [
@@ -37,7 +37,7 @@ class TodoList extends Component {
       description: "Description",
       status: true
     };
-   
+
     this.columns = [
       {
         title: "ID",
@@ -66,17 +66,15 @@ class TodoList extends Component {
       }
     ];
   }
-  remove = () => {
-    console.log("remove");
-  };
 
   render() {
-    let filterdData = data.filter(result=>{
-        return  result.status ? result.status =  'true': result.status ='false'
-         
-      })
+    let filterdData = data.filter(result => {
+      return result.status
+        ? (result.status = "true")
+        : (result.status = "false");
+    });
     const { title, description, status } = this.state;
-console.log(filterdData);
+    console.log(filterdData);
 
     return (
       <Fragment>
@@ -84,7 +82,7 @@ console.log(filterdData);
           style={{ marginTop: 40 }}
           columns={this.columns}
           rowKey="id"
-            dataSource={data}
+          dataSource={data}
         />
         ,
       </Fragment>
