@@ -10,12 +10,12 @@ class AddTodo extends Component {
           <Row>
             <Col span={4}></Col>
             
-            <Col span={10}>
+            <Col span={7}>
               <InputNumber
                 placeholder={"Task"}
                 size="small"
                 min={1}
-                style={{ width: 150 }}
+                style={{ width: 400 }}
                 max={100000}
                 // onChange={e => {
                 //   this.setState({ amount: e });
