@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-
+import "./todo-list.css"
 class TodoList extends Component {
   constructor() {
     super();
