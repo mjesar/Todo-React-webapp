@@ -55,14 +55,19 @@ class AddTodoPage extends React.Component {
   };
 
   handleCancel = () => {
-    this.setState({ visible: false });
+    this.setState({ visible: false});
+    console.log("CANCEL");
+    
   };
 
   handleCreate = () => {
     const { form } = this.formRef.props;
+    console.log("CREATED");
+    
     form.validateFields((err, values) => {
       if (err) {
-        return;
+        return console.log("CREATED ERROR");
+        ;
       }
 
       console.log('Received values of form: ', values);

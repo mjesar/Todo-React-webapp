@@ -1,8 +1,9 @@
 import React, { Component, Fragment } from "react";
 import { Button, Input, Switch, Row, Col, Popconfirm, Table } from "antd";
 import "./todo-list.css";
+import { readCookie } from "../../utils/readyCookies";
 // import AddButton from "../add-button";
-import axios from 'axios'
+import axios from "axios";
 import AddTodoPage from "../add-todo";
 
 const data = [
@@ -39,13 +40,14 @@ class TodoList extends Component {
       title: "work",
       description: "Description",
       status: true,
-      checking:true
+      checking: true,
+      todosArray: []
     };
 
     this.columns = [
       {
         title: "ID",
-        dataIndex: "id",
+        dataIndex: "sys.id",
         key: "name"
       },
       {
@@ -59,14 +61,14 @@ class TodoList extends Component {
         dataIndex: "status",
         key: "status",
         render: (text, record) => {
-          console.log('this', record)
+          console.log("this", record);
           return (
             <Switch
-           // checked= {"status"}
-            //   style={{ backgroundColor: "#011529" ,color: "white" }}
-           id={record.status?"a":"b"}
-         //   checked={true ? "a" :'b'}
-            //  defaultChecked
+              // checked= {"status"}
+              //   style={{ backgroundColor: "#011529" ,color: "white" }}
+              id={record.status ? "a" : "b"}
+              //   checked={true ? "a" :'b'}
+              //  defaultChecked
               onChange={this.updateStatus}
             />
           );
@@ -87,30 +89,31 @@ class TodoList extends Component {
       }
     ];
   }
-  componentDidMount(){
-     axios({
-    method: 'get',
-    url: '',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      'X-User-Email': readCookie('userEmail'),
-      'X-User-Token': readCookie('userToken'),
-    },
-  })
-    .then(response => {
-      console.log(response);
-      
+  componentDidMount() {
+    axios({
+      method: "get",
+      url: "http://localhost:3000/api/v1/todos",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "X-User-Email": readCookie("userEmail"),
+        "X-User-Token": readCookie("userToken")
+      }
+    }).then(res => {
+      let todo = res.data.items
+      this.setState({todosArray:todo})
+      console.log("Todo Data", res);
     })
-    .catch(error => {
-     console.log(error);
-     
-    });
+      .catch(error => {
+          console.log(error);
+         });
 
+
+   
   }
-  updateStatus = (checked )=> {
-    console.log("Update Status",checked);
-  return this.setState({checking:checked})
+  updateStatus = checked => {
+    console.log("Update Status", checked);
+    return this.setState({ checking: checked });
   };
   render() {
     let filterdData = data.filter(result => {
@@ -133,7 +136,7 @@ class TodoList extends Component {
                 columns={this.columns}
                 rowKey="id"
                 pagination={false}
-                dataSource={data}
+                dataSource={this.state.todosArray}
               />
               <AddTodoPage />
             </Col>
