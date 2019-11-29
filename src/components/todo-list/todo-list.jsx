@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import { Button, Input, Switch, Row, Col, Popconfirm, Table } from "antd";
 import "./todo-list.css";
 // import AddButton from "../add-button";
+import axios from 'axios'
 import AddTodoPage from "../add-todo";
 
 const data = [
@@ -85,6 +86,27 @@ class TodoList extends Component {
         )
       }
     ];
+  }
+  componentDidMount(){
+     axios({
+    method: 'get',
+    url: '',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'X-User-Email': readCookie('userEmail'),
+      'X-User-Token': readCookie('userToken'),
+    },
+  })
+    .then(response => {
+      console.log(response);
+      
+    })
+    .catch(error => {
+     console.log(error);
+     
+    });
+
   }
   updateStatus = (checked )=> {
     console.log("Update Status",checked);
