@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { Button, Input, Popconfirm, Table } from "antd";
+import AddTodo from '../add-todo'
 import "./todo-list.css";
 
 const data = [
@@ -84,7 +85,7 @@ class TodoList extends Component {
           rowKey="id"
           dataSource={data}
         />
-        ,
+        <AddTodo/>
       </Fragment>
     );
   }
