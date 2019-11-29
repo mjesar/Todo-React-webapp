@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from "react";
-import { Button, Input, Row, Col, Popconfirm, Table } from "antd";
+import { Button, Input, Switch, Row, Col, Popconfirm, Table } from "antd";
 import "./todo-list.css";
 // import AddButton from "../add-button";
-import AddTodoPage from '../add-todo';
+import AddTodoPage from "../add-todo";
 
 const data = [
   {
@@ -37,7 +37,8 @@ class TodoList extends Component {
     this.state = {
       title: "work",
       description: "Description",
-      status: true
+      status: true,
+      checking:true
     };
 
     this.columns = [
@@ -52,7 +53,24 @@ class TodoList extends Component {
         key: "title"
       },
       { title: "Description", dataIndex: "description", key: "description" },
-      { title: "status", dataIndex: "status", key: "status" },
+      {
+        title: "status",
+        dataIndex: "status",
+        key: "status",
+        render: (text, record) => {
+          console.log('this', record)
+          return (
+            <Switch
+           // checked= {"status"}
+            //   style={{ backgroundColor: "#011529" ,color: "white" }}
+           id={record.status?"a":"b"}
+         //   checked={true ? "a" :'b'}
+            //  defaultChecked
+              onChange={this.updateStatus}
+            />
+          );
+        }
+      },
 
       {
         title: "DELETE",
@@ -68,7 +86,10 @@ class TodoList extends Component {
       }
     ];
   }
-
+  updateStatus = (checked )=> {
+    console.log("Update Status",checked);
+  return this.setState({checking:checked})
+  };
   render() {
     let filterdData = data.filter(result => {
       return result.status
@@ -89,7 +110,7 @@ class TodoList extends Component {
                 style={{ marginTop: 40 }}
                 columns={this.columns}
                 rowKey="id"
-                pagination = {false}
+                pagination={false}
                 dataSource={data}
               />
               <AddTodoPage />

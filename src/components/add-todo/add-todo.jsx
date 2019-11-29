@@ -12,7 +12,7 @@ const AddTodoForm = Form.create({ name: 'form_in_modal' })(
       return (
         <Modal
           visible={visible}
-          title="Create a new collection"
+          title="Add new Task"
           okText="Create"
           onCancel={onCancel}
           onOk={onCreate}
@@ -31,8 +31,8 @@ const AddTodoForm = Form.create({ name: 'form_in_modal' })(
                 initialValue: 'public',
               })(
                 <Radio.Group>
-                  <Radio value="public">Public</Radio>
-                  <Radio value="private">Private</Radio>
+                  <Radio value="Done">Complete</Radio>
+                  <Radio value="private">Uncomplete</Radio>
                 </Radio.Group>,
               )}
             </Form.Item>
