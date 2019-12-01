@@ -6,7 +6,7 @@ const { Header } = Layout;
 const menu = (
   <Menu>
     <Menu.Item>
-      <a rel="noopener noreferrer" href="#">
+      <a rel="noopener noreferrer" href="http://localhost:3000/signout">
         <Icon type="logout" theme="outlined" className="dropdown-icon" /> Logout
       </a>
     </Menu.Item>
