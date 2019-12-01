@@ -52,7 +52,7 @@ class TodoList extends Component {
               console.log("INDEX OF ", index);
             }}
           >
-            <a href="javascript:;">Delete</a>
+            <Icon type="delete" />
           </Popconfirm>
         )
       }
