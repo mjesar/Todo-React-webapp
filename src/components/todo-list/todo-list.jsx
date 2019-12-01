@@ -1,39 +1,9 @@
 import React, { Component, Fragment } from "react";
-import { Button, Input, Switch, Row, Col, Popconfirm, Table } from "antd";
+import { Row, Col, Popconfirm, Table } from "antd";
 import "./todo-list.css";
-import { readCookie } from "../../utils/readyCookies";
 import getData from "../../Networks/getData";
-
-// import AddButton from "../add-button";
-import axios from "axios";
+import deleteData from "../../Networks/deleteData";
 import AddTodoPage from "../add-todo";
-
-const data = [
-  {
-    id: "1",
-    title: "Dinner ",
-    description: "with friends",
-    status: false
-  },
-  {
-    id: "2",
-    title: "Dinner ",
-    description: "with friends",
-    status: false
-  },
-  {
-    id: "3",
-    title: "Dinner ",
-    description: "with friends",
-    status: false
-  },
-  {
-    id: "4",
-    title: "Dinner ",
-    description: "with friends",
-    status: false
-  }
-];
 
 class TodoList extends Component {
   constructor() {
@@ -67,10 +37,13 @@ class TodoList extends Component {
       {
         title: "DELETE",
         key: "action",
-        render: (text, record) => (
+        render: (text, record, index) => (
           <Popconfirm
             title="Sure to delete?"
-            onConfirm={() => this.handleDelete(record.id)}
+            onConfirm={() => {
+              this.handleDelete(record.sys.id, index);
+              console.log("INDEX OF ", index);
+            }}
           >
             <a href="javascript:;">Delete</a>
           </Popconfirm>
@@ -88,9 +61,18 @@ class TodoList extends Component {
       }
     });
   }
-  updateStatus = checked => {
-    console.log("Update Status", checked);
-    return this.setState({ checking: checked });
+  handleDelete = (id, index) => {
+    const { todosArray } = this.state;
+    let todo = todosArray.splice(index, 1);
+    console.log("index", index);
+    todosArray.push(todo);
+    this.setState({ todosArray: todosArray });
+
+    deleteData(id).then(res => {
+      console.log(res);
+
+      console.log("ID", id);
+    });
   };
   render() {
     const { todosArray } = this.state;
