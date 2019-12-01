@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Popconfirm, Table, Checkbox } from "antd";
+import { Popconfirm, Table, Checkbox, Icon } from "antd";
 import "./todo-list.css";
 import getData from "../../Networks/getData";
 import deleteData from "../../Networks/deleteData";
@@ -33,6 +33,12 @@ class TodoList extends Component {
         dataIndex: "status",
         key: "status",
         render: () => <Checkbox onChange={this.onChange}></Checkbox>
+      },
+      {
+        title: "Edit",
+        dataIndex: "edit",
+        key: "edit",
+        render: () => <Icon type="edit" />
       },
 
       {
