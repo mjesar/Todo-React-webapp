@@ -1,0 +1,9 @@
+.spanClass {
+  color: white;
+  font-weight: bold;
+  font-family: "Times New Roman", Times, serif;
+}
+.avatarImg {
+  width: 40px !important;
+  border-radius: 20px !important;
+}
