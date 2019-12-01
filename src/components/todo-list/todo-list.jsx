@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Popconfirm, Table } from "antd";
+import { Popconfirm, Table, Checkbox } from "antd";
 import "./todo-list.css";
 import getData from "../../Networks/getData";
 import deleteData from "../../Networks/deleteData";
@@ -31,7 +31,8 @@ class TodoList extends Component {
       {
         title: "status",
         dataIndex: "status",
-        key: "status"
+        key: "status",
+        render: () => <Checkbox onChange={this.onChange}></Checkbox>
       },
 
       {
@@ -61,6 +62,9 @@ class TodoList extends Component {
       }
     });
   }
+  onChange = e => {
+    console.log(`checked = ${e.target.checked}`);
+  };
   handleDelete = (id, index) => {
     const { todosArray } = this.state;
     let todo = todosArray.splice(index, 1);
