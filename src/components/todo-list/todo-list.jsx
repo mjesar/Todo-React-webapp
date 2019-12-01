@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Row, Col, Popconfirm, Table } from "antd";
+import { Popconfirm, Table } from "antd";
 import "./todo-list.css";
 import getData from "../../Networks/getData";
 import deleteData from "../../Networks/deleteData";
@@ -86,20 +86,14 @@ class TodoList extends Component {
     return (
       <Fragment>
         <div className="todoInputs">
-          <Row>
-            <Col span={9}></Col>
-
-            <Col span={2}>
-              <Table
-                style={{ marginTop: 40 }}
-                columns={this.columns}
-                rowKey="id"
-                pagination={false}
-                dataSource={filterdData}
-              />
-              <AddTodoPage />
-            </Col>
-          </Row>
+          <Table
+            style={{ marginTop: 40 }}
+            columns={this.columns}
+            rowKey="id"
+            pagination={false}
+            dataSource={filterdData}
+          />
+          <AddTodoPage />
         </div>
       </Fragment>
     );
