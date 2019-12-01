@@ -97,7 +97,7 @@ class AddTodoPage extends React.Component {
       <div>
         <Button
           onClick={this.showModal}
-          style={{ backgroundColor: "#011529", color: "white" }}
+          style={{ color: "343a40", color: "white" }}
           shape="circle"
           icon="plus"
           size={size}
