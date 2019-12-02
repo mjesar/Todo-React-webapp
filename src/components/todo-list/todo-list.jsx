@@ -4,7 +4,7 @@ import "./todo-list.css";
 import getData from "../../Networks/getData";
 import deleteData from "../../Networks/deleteData";
 import AddTodoPage from "../add-todo";
-
+import EditTodoPage from "../edit-todo";
 class TodoList extends Component {
   constructor() {
     super();
@@ -13,6 +13,7 @@ class TodoList extends Component {
       description: "Description",
       status: true,
       checking: true,
+      flag:false,
       todosArray: []
     };
 
@@ -38,7 +39,8 @@ class TodoList extends Component {
         title: "Edit",
         dataIndex: "edit",
         key: "edit",
-        render: () => <Icon type="edit" />
+        render: () => <a onClick={() =>this.setState({flag:true})}>
+        <Icon type="edit" /></a>
       },
 
       {
@@ -95,11 +97,13 @@ class TodoList extends Component {
 
     return (
       <Fragment>
+                  <EditTodoPage flag={this.state.flag}/>
+
         <div className="todoInputs">
           <Table
             style={{ marginTop: 40 }}
             columns={this.columns}
-            rowKey="id"
+            rowKey={record => record.sys.id}
             pagination={false}
             dataSource={filterdData}
           />
