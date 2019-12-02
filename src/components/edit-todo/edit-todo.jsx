@@ -12,7 +12,7 @@ const EditTodoForm = Form.create({ name: "form_in_modal" })(
         <Modal
           visible={visible}
           title="Edit Task"
-          okText="Create"
+          okText="Update"
           onCancel={onCancel}
           onOk={onCreate}
         >
@@ -111,15 +111,7 @@ class EditTodoPage extends React.Component {
 
     return (
       <div>
-        <Button
-          onClick={this.showModal}
-          style={{ color: "343a40", color: "white" }}
-          shape="circle"
-          icon="plus"
-          size={size}
-          id="back-to-top"
-        ></Button>
-
+      
         <EditTodoForm
           wrappedComponentRef={this.saveFormRef}
           visible={this.state.flag}
