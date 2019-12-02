@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Modal, Form, Input, Radio } from "antd";
 import "./edit-todo.css";
 import editData from "../../Networks/editData";
+import showData from "../../Networks/showData";
 
 const EditTodoForm = Form.create({ name: "form_in_modal" })(
   class extends React.Component {
@@ -55,18 +56,30 @@ class EditTodoPage extends React.Component {
       visible: false,
       size: "large",
       flag: this.props.flag,
-      id: this.props.id
+      id: this.props.id,
+      todosArray: []
+
     };
   }
   UNSAFE_componentWillReceiveProps(nextProps){
     if(this.props!=nextProps){
       console.log('nextProps',nextProps);
       this.setState({flag:nextProps.flag})
-      this.setState({id:nextProps.id})
+      let id =this.setState({id:nextProps.id})
+        console.log("PZRPS ID",id);
+        
     }
-    
   }
+//   showData().then(res => {
+//     console.log(res);
+//   //   if (res.status === 200) {
+//       let todo = res;
+//       this.setState({ todosArray: todo });
+//       console.log("SHow data ", res);
+      
 
+//   //   }
+//   });
   showModal = () => {
     this.setState({ visible: true });
   };
