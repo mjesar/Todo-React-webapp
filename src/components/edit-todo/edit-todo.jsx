@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Modal, Form, Input, Radio } from "antd";
 import "./edit-todo.css";
-// import editData from "../../Networks/editData";
+import editData from "../../Networks/editData";
 
 const EditTodoForm = Form.create({ name: "form_in_modal" })(
   class extends React.Component {
@@ -54,13 +54,15 @@ class EditTodoPage extends React.Component {
     this.state = {
       visible: false,
       size: "large",
-      flag: this.props.flag
+      flag: this.props.flag,
+      id: this.props.id
     };
   }
   UNSAFE_componentWillReceiveProps(nextProps){
     if(this.props!=nextProps){
       console.log('nextProps',nextProps);
       this.setState({flag:nextProps.flag})
+      this.setState({id:nextProps.id})
     }
     
   }
@@ -92,10 +94,11 @@ class EditTodoPage extends React.Component {
         status: values.status
       };
       console.log("State Data", data);
-
-    //   addData(data).then(res => {
-    //     console.log("res", res);
-    //   });
+      console.log("Edit ID",this.state.id);
+      let id = this.state.id
+      editData(data,id).then(res => {
+        console.log("res", res);
+      });
 
       form.resetFields();
       this.setState({ flag: false });

@@ -13,9 +13,9 @@ class TodoList extends Component {
       description: "Description",
       status: true,
       checking: true,
-      flag:false,
-      todosArray: []
-    };
+      flag: false,
+      todosArray: [],
+      id: ""    };
 
     this.columns = [
       {
@@ -39,8 +39,13 @@ class TodoList extends Component {
         title: "Edit",
         dataIndex: "edit",
         key: "edit",
-        render: () => <a onClick={() =>this.setState({flag:true})}>
-        <Icon type="edit" /></a>
+        render: (text,record) => (
+         <div>       
+          <a onClick={() => this.setState({ flag: true,id:record.sys.id})}>
+            <Icon type="edit" />
+          </a>
+          </div>
+        )
       },
 
       {
@@ -97,8 +102,6 @@ class TodoList extends Component {
 
     return (
       <Fragment>
-                  <EditTodoPage flag={this.state.flag}/>
-
         <div className="todoInputs">
           <Table
             style={{ marginTop: 40 }}
@@ -108,6 +111,7 @@ class TodoList extends Component {
             dataSource={filterdData}
           />
           <AddTodoPage />
+          <EditTodoPage flag={this.state.flag } id={this.state.id} />
         </div>
       </Fragment>
     );
