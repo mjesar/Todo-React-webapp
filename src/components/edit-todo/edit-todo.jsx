@@ -96,7 +96,9 @@ class EditTodoPage extends React.Component {
       console.log('nextProps',nextProps);
       this.setState({flag:nextProps.flag})
       let id = nextProps.id
-
+      console.log("nextProp", id);
+      this.setState({id: id})
+      
       // let id =this.setState({id:nextProps.id})
       //   console.log("PZRPS ID",id);
       if(id!==null){

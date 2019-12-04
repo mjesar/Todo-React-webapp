@@ -106,7 +106,7 @@ class TodoList extends Component {
           <Table
             style={{ marginTop: 40 }}
             columns={this.columns}
-            rowKey={record => record.sys.id}
+            rowKey={"ID"}
             pagination={false}
             dataSource={filterdData}
           />
