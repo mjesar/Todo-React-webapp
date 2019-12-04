@@ -1,14 +1,38 @@
 import React from "react";
-import { Button, Modal, Form, Input, Radio } from "antd";
+import { Button, Modal, Form, Input, Radio,Checkbox } from "antd";
 import "./edit-todo.css";
 import editData from "../../Networks/editData";
 import showData from "../../Networks/showData";
 
 const EditTodoForm = Form.create({ name: "form_in_modal" })(
   class extends React.Component {
+    constructor(props){
+      super(props)
+      this.state={
+        data:"",
+        checked:false
+      }
+    }
+    onChange = e => {
+      console.log('checked = ', e.target.checked);
+      this.setState({
+        checked: e.target.checked,
+      });
+    };
+    UNSAFE_componentWillReceiveProps(nextProps){
+        if(this.props!==nextProps){
+          this.setState({
+            data:nextProps.data,
+            status:nextProps.data.status
+          })
+        }
+
+    }
+
     render() {
       const { visible, onCancel, onCreate, form } = this.props;
       const { getFieldDecorator } = form;
+      console.log(this.state);
       return (
         <Modal
           visible={visible}
@@ -20,6 +44,7 @@ const EditTodoForm = Form.create({ name: "form_in_modal" })(
           <Form layout="vertical">
             <Form.Item label="Title">
               {getFieldDecorator("title", {
+                   initialValue: this.state.data.title,
                 rules: [
                   {
                     required: true,
@@ -29,16 +54,21 @@ const EditTodoForm = Form.create({ name: "form_in_modal" })(
               })(<Input />)}
             </Form.Item>
             <Form.Item label="Description">
-              {getFieldDecorator("description")(<Input type="textarea" />)}
+              {getFieldDecorator("description",{
+                initialValue:this.state.data.description
+              })(<Input type="textarea"/>)}
             </Form.Item>
             <Form.Item className="collection-create-form_last-form-item">
-              {getFieldDecorator("status", {
-                initialValue: "public"
-              })(
-                <Radio.Group>
-                  <Radio value="true">Complete</Radio>
-                  <Radio value="false">Uncomplete</Radio>
-                </Radio.Group>
+              {getFieldDecorator("status")(
+                // <Radio.Group>
+                //   <Radio value="true">Complete</Radio>
+                //   <Radio value="false">Uncomplete</Radio>
+                // // </Radio.Group>
+                // <Radio value={this.state.data.status===true?true:false}>Complete</Radio>
+                //   <Radio value={this.state.data.status===false?false:true}>Uncomplete</Radio>
+                <Checkbox  checked={this.state.checked}
+               
+                onChange={this.onChange} >Status</Checkbox>
               )}
             </Form.Item>
           </Form>
@@ -57,7 +87,7 @@ class EditTodoPage extends React.Component {
       size: "large",
       flag: this.props.flag,
       id: this.props.id,
-      todosArray: []
+      todosArray: ""
 
     };
   }
@@ -65,23 +95,49 @@ class EditTodoPage extends React.Component {
     if(this.props!=nextProps){
       console.log('nextProps',nextProps);
       this.setState({flag:nextProps.flag})
-      let id =this.setState({id:nextProps.id})
-        console.log("PZRPS ID",id);
+      let id = nextProps.id
+
+      // let id =this.setState({id:nextProps.id})
+      //   console.log("PZRPS ID",id);
+      if(id!==null){
+        showData(id).then(res => {
+          console.log(res);
+        //   if (res.status === 200) {
+            let todo = 
+            {
+              id:res.data.sys.id,
+              title:res.data.title,
+              description:res.data.description,
+              status:res.data.status
+            }
+            ;
+            this.setState({ todosArray: todo });
+            console.log("SHow data ", todo);
+            
+      
+        //   }
+        });
+      }
+      
         
     }
   }
-//   showData().then(res => {
-//     console.log(res);
-//   //   if (res.status === 200) {
-//       let todo = res;
-//       this.setState({ todosArray: todo });
-//       console.log("SHow data ", res);
-      
-
-//   //   }
-//   });
+  
   showModal = () => {
     this.setState({ visible: true });
+    let id = this.state.id
+    console.log("ID", id);
+
+  //   showData(id).then(res => {
+  //   console.log(res);
+  // //   if (res.status === 200) {
+  //     let todo = res;
+  //     this.setState({ todosArray: todo });
+  //     console.log("SHow data ", res);
+      
+
+  // //   }
+  // });
   };
 
   handleCancel = () => {
@@ -133,6 +189,7 @@ class EditTodoPage extends React.Component {
           visible={this.state.flag}
           onCancel={this.handleCancel}
           onCreate={this.handleCreate.bind(this)}
+          data={this.state.todosArray}
         />
       </div>
     );

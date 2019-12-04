@@ -5,7 +5,7 @@ function editData(data, id) {
   return axios({
     method: "put",
     url: "http://localhost:3000/api/v1/todos/" + id,
-
+   // body:{}
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",

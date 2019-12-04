@@ -15,7 +15,7 @@ class TodoList extends Component {
       checking: true,
       flag: false,
       todosArray: [],
-      id: ""    };
+      id: null    };
 
     this.columns = [
       {
