@@ -31,12 +31,10 @@ const AddTodoForm = Form.create({ name: "form_in_modal" })(
               {getFieldDecorator("description")(<Input type="textarea" />)}
             </Form.Item>
             <Form.Item className="collection-create-form_last-form-item">
-              {getFieldDecorator("status", {
-                initialValue: "public"
-              })(
+              {getFieldDecorator("status")(
                 <Radio.Group>
-                  <Radio value="true">Complete</Radio>
-                  <Radio value="false">Uncomplete</Radio>
+                  <Radio value={true}>Complete</Radio>
+                  <Radio value={false}>Uncomplete</Radio>
                 </Radio.Group>
               )}
             </Form.Item>

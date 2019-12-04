@@ -33,7 +33,13 @@ class TodoList extends Component {
         title: "status",
         dataIndex: "status",
         key: "status",
-        render: () => <Checkbox onChange={this.onChange}></Checkbox>
+        render: (text,record) => (
+        // <p>{record.data.status}</p>
+        <div>
+        {console.log(record)}
+        <Checkbox checked={record.status===true? true: false} onChange={this.onChange} ></Checkbox>
+        </div>
+        )
       },
       {
         title: "Edit",
@@ -91,14 +97,30 @@ class TodoList extends Component {
       console.log("ID", id);
     });
   };
+  
   render() {
+    // const rowSelection = {
+    //   onChange: (selectedRowKeys, selectedRows) => {
+    //     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+    //   },
+    //   getCheckboxProps: record => {
+    //     console.log(record.status)
+    //     if(record.status === true){
+    //       record.status = 'checked' 
+    //     }
+    //   }
+    //    // record.status === true 
+    //    // record.status = 'checked' 
+    //  // return
+    
+
+    //     // disabled: record.name === 'Disabled User', // Column configuration not to be checked
+    //     // name: record.name,
+      
+    // };
+  
     const { todosArray } = this.state;
 
-    let filterdData = todosArray.filter(result => {
-      return result.status
-        ? (result.status = "true")
-        : (result.status = "false");
-    });
 
     return (
       <Fragment>
@@ -108,7 +130,7 @@ class TodoList extends Component {
             columns={this.columns}
             rowKey={"ID"}
             pagination={false}
-            dataSource={filterdData}
+            dataSource={todosArray}
           />
           <AddTodoPage />
           <EditTodoPage flag={this.state.flag } id={this.state.id} />
