@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from "react";
-import { Row, Col, Popconfirm, Table } from "antd";
+import { Popconfirm, Table, Checkbox, Icon } from "antd";
 import "./todo-list.css";
 import getData from "../../Networks/getData";
 import deleteData from "../../Networks/deleteData";
 import AddTodoPage from "../add-todo";
-
+import EditTodoPage from "../edit-todo";
 class TodoList extends Component {
   constructor() {
     super();
@@ -13,8 +13,9 @@ class TodoList extends Component {
       description: "Description",
       status: true,
       checking: true,
-      todosArray: []
-    };
+      flag: false,
+      todosArray: [],
+      id: null    };
 
     this.columns = [
       {
@@ -31,7 +32,26 @@ class TodoList extends Component {
       {
         title: "status",
         dataIndex: "status",
-        key: "status"
+        key: "status",
+        render: (text,record) => (
+        // <p>{record.data.status}</p>
+        <div>
+        {console.log(record)}
+        <Checkbox checked={record.status===true? true: false} onChange={this.onChange} ></Checkbox>
+        </div>
+        )
+      },
+      {
+        title: "Edit",
+        dataIndex: "edit",
+        key: "edit",
+        render: (text,record) => (
+         <div>       
+          <a onClick={() => this.setState({ flag: true,id:record.sys.id})}>
+            <Icon type="edit" />
+          </a>
+          </div>
+        )
       },
 
       {
@@ -45,7 +65,7 @@ class TodoList extends Component {
               console.log("INDEX OF ", index);
             }}
           >
-            <a href="javascript:;">Delete</a>
+            <Icon type="delete" />
           </Popconfirm>
         )
       }
@@ -61,6 +81,9 @@ class TodoList extends Component {
       }
     });
   }
+  onChange = e => {
+    console.log(`checked = ${e.target.checked}`);
+  };
   handleDelete = (id, index) => {
     const { todosArray } = this.state;
     let todo = todosArray.splice(index, 1);
@@ -74,32 +97,43 @@ class TodoList extends Component {
       console.log("ID", id);
     });
   };
+  
   render() {
+    // const rowSelection = {
+    //   onChange: (selectedRowKeys, selectedRows) => {
+    //     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+    //   },
+    //   getCheckboxProps: record => {
+    //     console.log(record.status)
+    //     if(record.status === true){
+    //       record.status = 'checked' 
+    //     }
+    //   }
+    //    // record.status === true 
+    //    // record.status = 'checked' 
+    //  // return
+    
+
+    //     // disabled: record.name === 'Disabled User', // Column configuration not to be checked
+    //     // name: record.name,
+      
+    // };
+  
     const { todosArray } = this.state;
 
-    let filterdData = todosArray.filter(result => {
-      return result.status
-        ? (result.status = "true")
-        : (result.status = "false");
-    });
 
     return (
       <Fragment>
         <div className="todoInputs">
-          <Row>
-            <Col span={9}></Col>
-
-            <Col span={2}>
-              <Table
-                style={{ marginTop: 40 }}
-                columns={this.columns}
-                rowKey="id"
-                pagination={false}
-                dataSource={filterdData}
-              />
-              <AddTodoPage />
-            </Col>
-          </Row>
+          <Table
+            style={{ marginTop: 40 }}
+            columns={this.columns}
+            rowKey={"ID"}
+            pagination={false}
+            dataSource={todosArray}
+          />
+          <AddTodoPage />
+          <EditTodoPage flag={this.state.flag } id={this.state.id} />
         </div>
       </Fragment>
     );

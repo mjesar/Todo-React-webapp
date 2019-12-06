@@ -16,7 +16,7 @@ class MainHeader extends Component {
   render() {
     return (
       <Fragment>
-        <Header style={{ width: "100%" }}>
+        <Header style={{ color: "343a40", width: "100%" }}>
           <div className={"userInfo"}>
             <Row>
               <div className="spanInfo">

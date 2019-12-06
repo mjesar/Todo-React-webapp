@@ -31,12 +31,10 @@ const AddTodoForm = Form.create({ name: "form_in_modal" })(
               {getFieldDecorator("description")(<Input type="textarea" />)}
             </Form.Item>
             <Form.Item className="collection-create-form_last-form-item">
-              {getFieldDecorator("status", {
-                initialValue: "public"
-              })(
+              {getFieldDecorator("status")(
                 <Radio.Group>
-                  <Radio value="true">Complete</Radio>
-                  <Radio value="false">Uncomplete</Radio>
+                  <Radio value={true}>Complete</Radio>
+                  <Radio value={false}>Uncomplete</Radio>
                 </Radio.Group>
               )}
             </Form.Item>
@@ -97,7 +95,7 @@ class AddTodoPage extends React.Component {
       <div>
         <Button
           onClick={this.showModal}
-          style={{ backgroundColor: "#011529", color: "white" }}
+          style={{ color: "343a40", color: "white" }}
           shape="circle"
           icon="plus"
           size={size}
